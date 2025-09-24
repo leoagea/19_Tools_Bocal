@@ -207,7 +207,8 @@ def getLoginById() -> None:
 		}
 		response = requests.get(url, headers=get_auth_headers(), params=params)
 		page_number += 1
-
+		if not response or not response.json():
+			return
 		if response.status_code == 200:
 			user_data = response.json()
 			for user in user_data:
