@@ -192,3 +192,29 @@ def update_user_badges() -> None:
 		handle_remove_badges(existing_groups, available_badges)
 	else:
 		print("Invalid choice. Please enter 'a' for add or 'r' for remove.")
+
+
+def getLoginById() -> None:
+	user_id = input("Enter user ID: ")
+	page_number = 0
+
+	url = f"{api_url}/campus/12/users"
+	
+	while True:
+		params = {
+			"page[size]": 100, 
+			"page[number]": page_number
+		}
+		response = requests.get(url, headers=get_auth_headers(), params=params)
+		page_number += 1
+
+		if response.status_code == 200:
+			user_data = response.json()
+			for user in user_data:
+				if user['id'] == int(user_id):
+					print(f"Login: {user['login']}")
+					return
+		else:
+			print(f"Failed to retrieve user data. Status code: {response.status_code}")
+			print(f"Response: {response.text}")
+			return
