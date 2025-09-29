@@ -22,6 +22,8 @@ def authenticate() -> str:
 		auth_token = response.json().get("access_token", "")
 
 def get_auth_headers() -> dict:
+	if not auth_token:
+		authenticate()
 	return {
 		"Authorization": f"Bearer {auth_token}"
 	}
