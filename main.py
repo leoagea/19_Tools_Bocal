@@ -4,10 +4,8 @@ if __name__ == "__main__":
 	authenticate()
 
 	functions = {
-		"1": getLoginById,
 		"2": display_user_data,
 		"3": display_user_groups,
-		"4": update_user_image,
 		"5": update_user_badges
 	}
 
