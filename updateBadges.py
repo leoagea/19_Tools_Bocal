@@ -5,6 +5,7 @@ def get_available_badges():
 	return {
 		"STAFF": 1,
 		"PHOENIX": 47,
+		"BDE": 73,
 		"PEGASUS": 369,
 		"VIBRANIUM": 379
 	}
@@ -116,3 +117,6 @@ def update_user_badges() -> None:
 		handle_remove_badges(existing_groups, available_badges)
 	else:
 		print("Invalid choice. Please enter 'a' for add or 'r' for remove.")
+
+if __name__ == "__main__":
+	update_user_badges()
