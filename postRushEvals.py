@@ -1,21 +1,20 @@
 from config import *
 from math import ceil
 
+import requests
 import random
 
 from datetime import datetime, timedelta
 
 timezone = datetime.now().astimezone().tzinfo
 
+project_session_id = 9370 #a changer par la bonne project session du rush
 
+start = datetime(2026, 2, 9, 12, 45, tzinfo=timezone) #a modifier, debut des corrections
 
-project_session_id = 9370
+corr_count = 3 #nbre de corrections assigne par personne
 
-start = datetime(2026, 2, 9, 12, 45, tzinfo=timezone)
-
-corr_count = 3
-
-corr_len = timedelta(minutes=45)
+corr_len = timedelta(minutes=45) #duree de la correction
 
 correctors = ['juhanse']
 
@@ -33,8 +32,8 @@ response = requests.get(f"{api_url}/project_sessions/{project_session_id}/scale_
 corrs = response.json()
 
 print(corrs)
-
 print(len(corrs))
+
 
 matched = [c['team']['id'] for c in corrs]
 
@@ -48,7 +47,6 @@ scale_id = next(s['id'] for s in ps['scales'] if s['is_primary'] == True)
 print(scale_id)
 
 
-
 correctors = [(c, (start + (corr_len * delta)).isoformat()) for c in correctors for delta in range(corr_count)]
 
 print(correctors)
@@ -56,14 +54,9 @@ print(correctors)
 random.shuffle(correctors)
 
 
-
 print(len(teams), '\n')
 
-
-
 scale_teams = []
-
-
 
 for team in teams:
 
@@ -80,11 +73,8 @@ for team in teams:
 	scale_teams += [{'scale_id': scale_id, 'team_id': team['id'], 'user_id': corr[0], 'begin_at': corr[1]}]
 
 
-
 print(scale_teams)
-
 print(len(scale_teams))
-
 
 
 print(requests.post(f"{api_url}/scale_teams/multiple_create", json={'scale_teams': scale_teams},headers=get_auth_headers()))
