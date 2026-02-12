@@ -26,7 +26,6 @@ teams = response.json()
 
 print(len(teams))
 
-
 team_ids = [str(t['id']) for t in teams]
 
 response = requests.get(f"{api_url}/project_sessions/{project_session_id}/scale_teams", params={'team_id': ','.join(team_ids)}, headers=get_auth_headers())
@@ -39,7 +38,6 @@ print(len(corrs))
 matched = [c['team']['id'] for c in corrs]
 
 print(matched)
-
 
 response = requests.get(f"{api_url}/project_sessions/{project_session_id}", headers=get_auth_headers())
 ps = response.json()
